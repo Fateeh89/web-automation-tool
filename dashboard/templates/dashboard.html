@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+    </header>
+    <div class="container">
+        <h2>Devices</h2>
+        <form id="deviceForm">
+            <div>
+                <label for="name">Device Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="type">Device Type:</label>
+                <input type="text" id="type" name="type" required>
+            </div>
+            <div>
+                <label for="ip_address">IP Address:</label>
+                <input type="text" id="ip_address" name="ip_address" required>
+            </div>
+            <button type="submit">Add Device</button>
+        </form>
+        <div id="deviceList">
+            <!-- Device list will be populated here -->
+        </div>
+    </div>
+</body>
+</html>
