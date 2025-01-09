@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 # API Endpoints and Keys (Replace with actual keys)
 API_ENDPOINTS = {
     "cisco": "https://api.cisco.com/dna/intent/api/v1/",
-    "juniper": "https://api.mist.com/api/v1/",
+    "juniper": "https://api.ac2.mist.com/api/v1",
     "huawei": "https://api.huawei.com/nce/v1/"
 }
 
