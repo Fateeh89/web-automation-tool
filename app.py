@@ -1,12 +1,10 @@
-# web-automation-tool/app.py
-
 from flask import Flask, render_template, request, jsonify
 from flask_restful import Api, Resource
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, EqualTo
+from wtforms.validators import DataRequired, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Mail, Message
 from flask_principal import Principal, Permission, RoleNeed
@@ -45,6 +43,10 @@ toolbar = DebugToolbarExtension(app)
 manager = Manager(app)
 migrate = Migrate(app, db)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True, nullable=False)
@@ -60,6 +62,18 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return f"User  ('{self.username}', '{self.email}')"
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.id
 
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -84,7 +98,7 @@ class LoginForm(FlaskForm):
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Register')
@@ -104,11 +118,8 @@ class DeviceForm(FlaskForm):
     ip_address = StringField('IP Address', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    submit = SubmitField('Add Device')
-
-@app.route('/')
-def index():
-    return render_template('index.html')
+    submit = ```python
+SubmitField('Add Device')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -117,38 +128,19 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            return redirect(url_for('index'))
+            return redirect(url_for('dashboard'))
     return render_template('login.html', form=form)
 
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        return redirect(url_for('login'))
-    return render_template('register.html', form=form)
-
-@app.route('/devices', methods=['GET', 'POST'])
+@app.route('/dashboard')
 @login_required
-def manage_devices():
-    form = DeviceForm()
-    if form.validate_on_submit():
-        device = Device(name=form.name.data, ip_address=form.ip_address.data, username=form.username.data, password=generate_password_hash(form.password.data))
-        db.session.add(device)
-        db.session.commit()
-        return redirect(url_for('manage_devices'))
-    devices = Device.query.all()
-    return render_template('manage_devices.html', form=form, devices=devices)
+def dashboard():
+    return render_template('dashboard.html')
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    manager.add_command('db', MigrateCommand)
-    app.run(debug=True)
+    manager.run()
