@@ -18,20 +18,24 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 # API Endpoints and Keys (Replace with actual keys)
 API_ENDPOINTS = {
-    "cisco": "https://api.cisco.com/dna/intent/api/v1/",
+    "cisco": "https://sandboxdnac2.cisco.com/dna/system/api/v1/auth/token",
     "juniper": "https://api.ac2.mist.com/api/v1",
     "huawei": "https://api.huawei.com/nce/v1/"
 }
 
 FORUM_URLS = {
-    "cisco": "https://community.cisco.com/",
-    "juniper": "https://forums.juniper.net/",
-    "huawei": "https://forum.huawei.com/"
+    "ios_xr": "https://www.cisco.com/c/en/us/support/ios-nx-os-software/ios-xr-software/series.html#Configuration",
+    "ios_xe": "https://www.cisco.com/c/en/us/support/ios-nx-os-software/ios-xe-17/series.html#Configuration",
+    "juniper": "https://www.juniper.net/documentation/us/en/software/junos/cli-reference/index.html",
+    "hw_m14": "https://support.huawei.com/enterprise/en/doc/EDOC1100419261?idPath=24030814%7C9856750%7C22715517%7C23708778%7C252772223",
+    "hw_m1d": "https://support.huawei.com/enterprise/en/doc/EDOC1100367108?idPath=24030814%7C9856750%7C22715517%7C23708778%7C252772223",
+    "hw_m1a": "https://support.huawei.com/enterprise/en/doc/EDOC1100419271?idPath=24030814%7C9856750%7C22715517%7C23708778%7C252772223",
+    "hw_tshoot": "https://support.huawei.com/enterprise/en/routers/netengine-8000-pid-252772223?category=troubleshooting&subcategory=technical-guides"
 }
 
 API_KEYS = {
     "cisco": "your_cisco_api_key",
-    "juniper": "your_juniper_api_key",
+    "juniper": "jeJXARyhvOQNQyFf2RGWIsBTuPO31hcNgKXT42hosHmkJL1ZGhqdQ8SU6jIP8HHgZgAD5bFjo8EExd4ic9sZNqzvggTusw9i",
     "huawei": "your_huawei_api_key"
 }
 
