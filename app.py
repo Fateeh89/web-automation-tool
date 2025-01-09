@@ -143,4 +143,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    manager.run()
+    manager.add_command('db', MigrateCommand)
+    app.run(host='172.16.1.158', port=5000, debug=True)
